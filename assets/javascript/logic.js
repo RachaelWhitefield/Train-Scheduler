@@ -58,10 +58,26 @@ database.ref().on("child_added", function(childSnapshot) {
   var trainTime = childSnapshot.val().first;
   var trainFreq = childSnapshot.val().frequency;
 
+  
+  var trainTimeConverted = moment(trainTime, "HH:mm").subtract(1, "years");
+  console.log(trainTimeConverted);
+
+  var diffTime = moment().diff(moment(trainTimeConverted), "minutes");
+  console.log("DIFFERENCE IN TIME: " + diffTime);
+
+  var remainder = diffTime % trainFreq;
+  console.log(remainder);
+
+  var minutesTillTrain = trainFreq - remainder;
+  console.log("MINUTES TILL TRAIN: " + minutesTillTrain);
+
+  var nextTrain = moment().add(minutesTillTrain, "minutes");
+  console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+
   // Employee Info
   console.log(trainName);
   console.log(trainDest);
-//   console.log(trainTime);
+  console.log(trainTime);
   console.log(trainFreq);
 
 
@@ -70,14 +86,14 @@ database.ref().on("child_added", function(childSnapshot) {
     $("<td>").text(trainName),
     $("<td>").text(trainDest),
     $("<td>").text(trainFreq),
-    $("<td>").text("TBD"),
-    $("<td>").text("TBD"),
+    $("<td>").text(nextTrain),
+    $("<td>").text(minutesTillTrain),
   );
 
   // Append the new row to the table
   $("#train-table > tbody").append(newRow);
 });
 
-var currentTime = moment();
-console.log("CURRENT TIME: " + moment(currentTime).format("HH:mm"));
+// var currentTime = moment();
+// console.log("CURRENT TIME: " + moment(currentTime).format("HH:mm"));
 
