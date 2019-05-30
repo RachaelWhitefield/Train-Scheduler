@@ -72,7 +72,7 @@ database.ref().on("child_added", function(childSnapshot) {
   console.log("MINUTES TILL TRAIN: " + minutesTillTrain);
 
   var nextTrain = moment().add(minutesTillTrain, "minutes");
-  console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+  console.log("ARRIVAL TIME: " + moment(nextTrain).format("HH:mm"));
 
   // Employee Info
   console.log(trainName);
@@ -86,9 +86,9 @@ database.ref().on("child_added", function(childSnapshot) {
     $("<td>").text(trainName),
     $("<td>").text(trainDest),
     $("<td>").text(trainFreq),
-    $("<td>").text(nextTrain),
-    $("<td>").text(minutesTillTrain),
-  );
+    $("<td>").text((nextTrain).format("HH:mm")),
+    $("<td>").text((minutesTillTrain),
+  ));
 
   // Append the new row to the table
   $("#train-table > tbody").append(newRow);
