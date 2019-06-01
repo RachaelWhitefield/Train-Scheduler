@@ -19,7 +19,7 @@ $("#add-train-btn").on("click", function(event) {
   // Grabs user input
   var trainName = $("#train-name-input").val().trim();
   var trainDest = $("#destination-input").val().trim();
-  var trainTime = moment($("#first-input").val().trim(), "HH:mm").format("X");
+  var trainTime = $("#first-input").val().trim();
   var trainFreq = $("#frequency-input").val().trim();
 
   // Creates local "temporary" object for holding train data
@@ -55,7 +55,7 @@ database.ref().on("child_added", function(childSnapshot) {
   // Store everything into a variable.
   var trainName = childSnapshot.val().name;
   var trainDest = childSnapshot.val().destination;
-  var trainTime = childSnapshot.val().first;
+  var trainTime = childSnapshot.val().start;
   var trainFreq = childSnapshot.val().frequency;
 
   
@@ -74,7 +74,7 @@ database.ref().on("child_added", function(childSnapshot) {
   var nextTrain = moment().add(minutesTillTrain, "minutes");
   console.log("ARRIVAL TIME: " + moment(nextTrain).format("HH:mm"));
 
-  // Employee Info
+  // Train Info
   console.log(trainName);
   console.log(trainDest);
   console.log(trainTime);
@@ -87,8 +87,8 @@ database.ref().on("child_added", function(childSnapshot) {
     $("<td>").text(trainDest),
     $("<td>").text(trainFreq),
     $("<td>").text((nextTrain).format("HH:mm")),
-    $("<td>").text((minutesTillTrain),
-  ));
+    $("<td>").text(minutesTillTrain),
+  );
 
   // Append the new row to the table
   $("#train-table > tbody").append(newRow);
